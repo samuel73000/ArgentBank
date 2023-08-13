@@ -52,10 +52,17 @@ html {
   .main-nav a.router-link-exact-active {
     color: #42b983;
   }
+
+  
   
   .main-nav-item {
     text-decoration: none;
     margin-right: 0.5rem;
+    background-color: white;
+    box-shadow:none;
+    border:0 none;
+    outline:0;
+    
   }
   
   .main-nav-item:hover {
@@ -130,6 +137,17 @@ html {
     flex-direction: column;
   }
   
+
+
+  
+  .modal-input{
+    margin-top: 12px;
+  }
+  
+
+
+
+
   @media (min-width: 920px) {
     .features {
       flex-direction: row;

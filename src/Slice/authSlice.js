@@ -1,4 +1,3 @@
-// authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
@@ -6,10 +5,9 @@ const authSlice = createSlice({
   initialState: {
     authToken: null,
     loginMessage: '',
-    email: '',
-    password: '',
+    emailSignIn: '',
+    passwordSignIn: '',
     isLoggedIn: false, 
-    
   },
   reducers: {
     setAuthToken: (state, action) => {
@@ -18,11 +16,11 @@ const authSlice = createSlice({
     setLoginMessage: (state, action) => {
       state.loginMessage = action.payload;
     },
-    setEmail: (state, action) => {
-      state.email = action.payload;
+    setEmailSignIn: (state, action) => {
+      state.emailSignIn = action.payload;
     },
-    setPassword: (state, action) => {
-      state.password = action.payload;
+    setPasswordSignIn: (state, action) => {
+      state.passwordSignIn = action.payload;
     },
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
@@ -35,5 +33,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthToken, setLoginMessage , setEmail, setPassword , setIsLoggedIn ,clearAuthData } = authSlice.actions;
+export const { setAuthToken, setLoginMessage , setEmailSignIn, setPasswordSignIn , setIsLoggedIn ,clearAuthData , setIsModalOpen } = authSlice.actions;
 export default authSlice.reducer;
