@@ -8,6 +8,8 @@ const authSlice = createSlice({
     loginMessage: '',
     email: '',
     password: '',
+    isLoggedIn: false, 
+    
   },
   reducers: {
     setAuthToken: (state, action) => {
@@ -22,8 +24,16 @@ const authSlice = createSlice({
     setPassword: (state, action) => {
       state.password = action.payload;
     },
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
+    clearAuthData: state => {
+      state.isLoggedIn = false;
+      state.authToken = null;
+      // Réinitialisez d'autres propriétés d'état liées à l'authentification si nécessaire
+    },
   },
 });
 
-export const { setAuthToken, setLoginMessage , setEmail, setPassword} = authSlice.actions;
+export const { setAuthToken, setLoginMessage , setEmail, setPassword , setIsLoggedIn ,clearAuthData } = authSlice.actions;
 export default authSlice.reducer;

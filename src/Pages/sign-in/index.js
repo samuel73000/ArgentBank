@@ -1,6 +1,6 @@
 import "../../Styles/index.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuthToken, setLoginMessage , setEmail, setPassword } from '../../Slice/authSlice';
+import { setAuthToken, setLoginMessage , setEmail, setPassword , setIsLoggedIn } from '../../Slice/authSlice';
 
 
 
@@ -11,8 +11,10 @@ function Signin() {
   const dispatch = useDispatch();
   const authToken = useSelector((state) => state.auth.authToken);
   const loginMessage = useSelector((state) => state.auth.loginMessage);
-  const email = useSelector((state) => state.auth.email); // Get email from Redux state
-  const password = useSelector((state) => state.auth.password); // Get password from Redux state
+  const email = useSelector((state) => state.auth.email); // Get email 
+  const password = useSelector((state) => state.auth.password); // Get password 
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Get login status 
+
 
   
 
@@ -32,10 +34,12 @@ function Signin() {
 
       if (response.ok) {
         const data = await response.json();
-        dispatch(setEmail('')); // Clear email after successful login
-        dispatch(setPassword('')); // Clear password after successful login
+        dispatch(setEmail('')); // Clear email 
+        dispatch(setPassword('')); // Clear password 
         dispatch(setAuthToken(data.authToken));
+        dispatch(setIsLoggedIn(true)); // il est connecter
         dispatch(setLoginMessage('Connexion réussie'));
+        localStorage.setItem('authToken', data.authToken);
         document.location.href = 'http://localhost:3000/user';
       } else {
         console.error('Échec de la connexion');
