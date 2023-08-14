@@ -40,6 +40,7 @@ const initialState = {
       setUserName: (state, action) => {
         state.auth.userName = action.payload;
       },
+      
     },
   });
 

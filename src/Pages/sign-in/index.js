@@ -9,7 +9,7 @@ import {
   setRememberMe,
 } from "../../Slice/authSlice";
 import ModalSignUp from "../../Components/ModalSignUp";
-import { openModal, closeModal } from "../../Slice/modalSlice";
+import { openModal, closeModal  } from "../../Slice/modalSlice";
 import React, { useEffect } from "react";
 
 function Signin() {
