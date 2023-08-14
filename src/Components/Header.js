@@ -7,7 +7,7 @@ import { clearAuthData, setIsLoggedIn } from "../Slice/authSlice";
 function Header() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Utilisation de useSelector pour extraire isLoggedIn du state
   const dispatch = useDispatch();
-
+ 
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');

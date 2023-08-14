@@ -6,13 +6,34 @@ import {
   setEmailSignIn,
   setPasswordSignIn,
   setIsLoggedIn,
+  setRememberMe,
 } from "../../Slice/authSlice";
 import ModalSignUp from "../../Components/ModalSignUp";
 import { openModal, closeModal } from "../../Slice/modalSlice";
+import React, { useEffect } from "react";
 
 function Signin() {
-  // modale pour s'inscrire
+  //remember me
 
+  const rememberMe = useSelector((state) => state.auth.rememberMe); // Obtenez l'état de "Remember Me"
+
+  useEffect(() => {
+    // Restaure les valeurs enregistrées lors du chargement initial
+    const storedEmail = localStorage.getItem("rememberedEmail");
+    const storedPassword = localStorage.getItem("rememberedPassword");
+    if (storedEmail) {
+      dispatch(setEmailSignIn(storedEmail));
+    }
+    if (storedPassword) {
+      dispatch(setPasswordSignIn(storedPassword));
+    }
+  }, []);
+  const handleRememberMeChange = () => {
+    // Gère le changement de la case à cocher "Remember Me"
+    dispatch(setRememberMe(!rememberMe));
+  };
+
+  // modale pour s'inscrire
   const handleOpenModal = () => {
     dispatch(openModal());
   };
@@ -37,6 +58,15 @@ function Signin() {
 
   // post l'email et et mdp
   const handleLogin = async () => {
+    if (rememberMe) {
+      // localStorage pour le remember me
+      localStorage.setItem("rememberedEmail", email);
+      localStorage.setItem("rememberedPassword", password);
+    } else {
+      localStorage.removeItem("rememberedEmail");
+      localStorage.removeItem("rememberedPassword");
+    }
+
     try {
       const response = await fetch("http://localhost:3001/api/v1/user/login", {
         method: "POST",
@@ -48,7 +78,7 @@ function Signin() {
           password: password,
         }),
       });
-      //  si le mdp et email sontok
+      //  si le mdp et email sont ok
       if (response.ok) {
         const data = await response.json();
         dispatch(setEmailSignIn("")); // Clear email
@@ -101,13 +131,22 @@ function Signin() {
               />
             </div>
             <div class="input-remember">
-              <input type="checkbox" id="remember-me" />
+              <input
+                type="checkbox"
+                id="remember-me"
+                checked={rememberMe}
+                onChange={handleRememberMeChange}
+              />
               <label for="remember-me">Remember me</label>
             </div>
             <button class="sign-in-button" onClick={handleLogin} type="button">
               Sign In
             </button>
-            <button onClick={handleToggleModal} class="sign-in-button" type="button">
+            <button
+              onClick={handleToggleModal}
+              class="sign-in-button"
+              type="button"
+            >
               {isOpen ? "Close" : "Sign-up"}
             </button>
             <ModalSignUp />
