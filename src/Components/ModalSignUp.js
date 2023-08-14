@@ -1,5 +1,6 @@
-import React from "react";
+// import { useSelector, useDispatch } from "react-redux";
 import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import {
   setEmail,
   setPassword,
@@ -7,48 +8,55 @@ import {
   setLastName,
   setUserName,
   closeModal,
+  selectAuthEmail,
+  selectAuthPassword,
+  selectAuthFirstName,
+  selectAuthLastName,
+  selectAuthUserName,
 } from "../Slice/modalSlice";
 
 const ModalSignUp = () => {
-  // state de modale
+  useEffect(() => {
+    dispatch(closeModal()); // Fermer la modal lors du chargement de la page
+  }, []);
+
   const isOpen = useSelector((state) => state.modal.isOpen);
   const dispatch = useDispatch();
 
-  // submit
-  const email = useSelector((state) => state.auth.email); // Obtenir l'email depuis le state
-  const password = useSelector((state) => state.auth.password); // Obtenir le mot de passe depuis le state
-  const firstName = useSelector((state) => state.auth.firstName); // Obtenir le prénom depuis le state
-  const lastName = useSelector((state) => state.auth.lastName); // Obtenir le nom depuis le state
-  const userName = useSelector((state) => state.auth.userName); // Obtenir le nom d'utilisateur depuis le state
+  const email = useSelector(selectAuthEmail);
+  const password = useSelector(selectAuthPassword);
+  const firstName = useSelector(selectAuthFirstName);
+  const lastName = useSelector(selectAuthLastName);
+  const userName = useSelector(selectAuthUserName);
 
-  const handleSignUp = async () => {
-  
-    try {
-      const response =  await fetch("http://localhost:3001/api/v1/user/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName,
-          userName: userName,
-        }),
+  const handleSignUp = () => {
+    fetch("http://localhost:3001/api/v1/user/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        userName: userName,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          dispatch(closeModal());
+          return response.json();
+        } else {
+          dispatch(closeModal());
+          throw new Error("Échec de l'inscription");
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'inscription :", error);
       });
-      if (response.ok) {
-        const data = await response.json();
-        
-        dispatch(closeModal());
-      } else {
-        console.error("Échec de l'inscription");
-      }
-    } catch (error) {
-      console.error("Erreur lors de l'inscription :", error);
-    }
   };
-
+  
   if (!isOpen) return null;
 
   return (

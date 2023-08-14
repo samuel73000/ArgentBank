@@ -107,7 +107,7 @@ function Signin() {
             <button class="sign-in-button" onClick={handleLogin} type="button">
               Sign In
             </button>
-            <button onClick={handleToggleModal} class="sign-in-button">
+            <button onClick={handleToggleModal} class="sign-in-button" type="button">
               {isOpen ? "Close" : "Sign-up"}
             </button>
             <ModalSignUp />

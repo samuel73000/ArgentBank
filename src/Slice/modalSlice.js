@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    isOpen: localStorage.getItem('modalOpen') === 'true' || false,
+  // localStorage.getItem('modalOpen') === 'true' ||
+    isOpen:  false,
+    auth:{
     email: "",
     password: "",
     firstName: "",
     lastName: "",
     userName: "",
+    },
   };
 
   
@@ -23,19 +26,19 @@ const initialState = {
         localStorage.setItem('modalOpen', 'false');
       },
       setEmail: (state, action) => {
-        state.email = action.payload;
+        state.auth.email = action.payload;
       },
       setPassword: (state, action) => {
-        state.password = action.payload;
+        state.auth.password = action.payload;
       },
       setFirstName: (state, action) => {
-        state.firstName= action.payload;
+        state.auth.firstName = action.payload;
       },
       setLastName: (state, action) => {
-        state.lastName = action.payload;
+        state.auth.lastName = action.payload;
       },
       setUserName: (state, action) => {
-        state.userName = action.payload;
+        state.auth.userName = action.payload;
       },
     },
   });
@@ -48,5 +51,12 @@ export const {
   setFirstName,
   setLastName,
   setUserName, } = modalSlice.actions;
+
+  // Sélecteurs
+export const selectAuthEmail = (state) => state.modal.auth.email;
+export const selectAuthPassword = (state) => state.modal.auth.password;
+export const selectAuthFirstName = (state) => state.modal.auth.firstName;
+export const selectAuthLastName = (state) => state.modal.auth.lastName;
+export const selectAuthUserName = (state) => state.modal.auth.userName;
 
 export default modalSlice.reducer;
