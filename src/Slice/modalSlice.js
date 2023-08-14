@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     isOpen: localStorage.getItem('modalOpen') === 'true' || false,
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    userName: '',
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    userName: "",
   };
 
   
