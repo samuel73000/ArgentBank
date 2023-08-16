@@ -1,6 +1,13 @@
 import "../Styles/index.css";
+import { useDispatch } from "react-redux";
+import { hideModal } from "../Slice/modalEditNameSlice";
 
 function ModalEditName() {
+  const dispatch = useDispatch();
+
+    const handleCancelClick = () => {
+        dispatch(hideModal());
+    };
   return (
     <section className="section-edit-name">
       <h1>Edit user info</h1>
@@ -19,7 +26,7 @@ function ModalEditName() {
       </div>
       <div className="div-btn-edit-name">
       <button className="btn-edit-name">Save</button>
-      <button className="btn-edit-name">Cancel</button>
+      <button className="btn-edit-name" onClick={handleCancelClick}>Cancel</button>
       </div>
     </section>
   );

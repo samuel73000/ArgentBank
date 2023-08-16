@@ -13,8 +13,13 @@ const modalEditNameSlice = createSlice({
             state.showModal = true;
             state.showWelcomeMessage = false;
         },
+        hideModal: state => {
+            state.showModal = false;
+            state.showWelcomeMessage = true;
+            state.showEditButton = true;
+        },
     },
 });
 
-export const { hideEditButton } = modalEditNameSlice.actions;
+export const { hideEditButton , hideModal } = modalEditNameSlice.actions;
 export default modalEditNameSlice.reducer;
