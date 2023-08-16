@@ -90,6 +90,7 @@ function Signin() {
         dispatch(setLoginMessage("Connexion réussie"));
         localStorage.setItem("authToken", data.body.token);
         navigate("/user")
+        console.log(data.body.token)
         // si le mdp et email sont pas ok
       } else {
         console.error("Échec de la connexion");

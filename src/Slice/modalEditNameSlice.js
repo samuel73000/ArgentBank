@@ -6,6 +6,11 @@ const modalEditNameSlice = createSlice({
         showEditButton: true,
         showModal: false,
         showWelcomeMessage: true,
+        userData :{
+        userName :"",
+        firstName :"",
+        lastName :"",
+    },
     },
     reducers: {
         hideEditButton: state => {
@@ -18,8 +23,17 @@ const modalEditNameSlice = createSlice({
             state.showWelcomeMessage = true;
             state.showEditButton = true;
         },
+        setUserName: (state, action) => {
+            state.userData.userName = action.payload;
+        },
+        setFirstName: (state, action) => {
+            state.userData.firstName = action.payload;
+        },
+        setLastName: (state, action) => {
+            state.userData.lastName = action.payload;
+        },
     },
 });
 
-export const { hideEditButton , hideModal } = modalEditNameSlice.actions;
+export const { hideEditButton , hideModal,setUserName ,setFirstName,setLastName} = modalEditNameSlice.actions;
 export default modalEditNameSlice.reducer;
