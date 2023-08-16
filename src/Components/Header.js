@@ -1,12 +1,14 @@
 import "../Styles/index.css";
 import React, { useState, useEffect } from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink  ,useNavigate  } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAuthData, setIsLoggedIn } from "../Slice/authSlice";
+
 
 function Header() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Utilisation de useSelector pour extraire isLoggedIn du state
   const dispatch = useDispatch();
+  const navigate = useNavigate();
  
 
   useEffect(() => {
@@ -19,13 +21,12 @@ function Header() {
   const handleLogout = () => {
     dispatch(setIsLoggedIn(false)); // Mettez à jour l'état de connexion lors de la déconnexion
     dispatch(clearAuthData());
-    document.location.href = "http://localhost:3000";
     localStorage.removeItem('authToken');
+    navigate("/")
   };
 
   const handleLogin = () => {
-    dispatch(setIsLoggedIn(true));
-    document.location.href = "http://localhost:3000/Sign-in";
+    navigate("/Sign-in")
   };
 
   return (
@@ -48,6 +49,7 @@ function Header() {
             >
               <i class="fa fa-user-circle"></i>
               <span>Sign-Out</span>
+
             </button>
           ) : (
             <button

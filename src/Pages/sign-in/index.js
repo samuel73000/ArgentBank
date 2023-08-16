@@ -11,6 +11,7 @@ import {
 import ModalSignUp from "../../Components/ModalSignUp";
 import { openModal, closeModal  } from "../../Slice/modalSlice";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Signin() {
   //remember me
@@ -55,7 +56,7 @@ function Signin() {
   const email = useSelector((state) => state.auth.emailSignIn); // Get email
   const password = useSelector((state) => state.auth.passwordSignIn); // Get password
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Get login status
-
+  const navigate = useNavigate();
   // post l'email et et mdp
   const handleLogin = async () => {
     if (rememberMe) {
@@ -87,7 +88,7 @@ function Signin() {
         dispatch(setIsLoggedIn(true)); // il est connecter
         dispatch(setLoginMessage("Connexion réussie"));
         localStorage.setItem("authToken", data.authToken);
-        document.location.href = "http://localhost:3000/user";
+        navigate("/user")
         // si le mdp et email sont pas ok
       } else {
         console.error("Échec de la connexion");
