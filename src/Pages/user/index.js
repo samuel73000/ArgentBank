@@ -1,21 +1,12 @@
 import Accounts from "../../Components/Accounts";
-import "../../Styles/index.css"
-import React, { useState } from 'react';
-
+import "../../Styles/index.css";
+import ModalEditName from "../../Components/ModalEditName";
 
 
 
 function User(){
     
 
-//  test
-const [showInput, setShowInput] = useState(false);
-
-  const handleButtonClick = () => {
-    setShowInput(!showInput); // Inverse la valeur de showInput lors du clic sur le bouton
-  };
-
-// ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
     const Account = {
@@ -30,10 +21,8 @@ const [showInput, setShowInput] = useState(false);
  <main class="main bg-dark">
       <div class="header">
         <h1>Welcome back<br />Tony Jarvis!</h1>
-        <button className="edit-button" onClick={handleButtonClick}>Edit Name
-        {showInput ? "Edit Name" : ""}
-        </button>
-        {showInput && <input type="text" placeholder="Saisissez quelque chose" />} 
+        <button className="edit-button" >Edit Name </button>
+        <ModalEditName/>
       </div>
       <h2 class="sr-only">Accounts</h2>
       <Accounts title={Account.title[0]} amount={Account.amount[0]} description={Account.description[0]} />
