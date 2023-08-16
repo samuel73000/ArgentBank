@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  // localStorage.getItem('modalOpen') === 'true' ||
     isOpen:  false,
     auth:{
     email: "",
@@ -13,8 +12,8 @@ const initialState = {
   };
 
   
-  const modalSlice = createSlice({
-    name: 'modal',
+  const modalSignUpSlice = createSlice({
+    name: 'SignUp',
     initialState,
     reducers: {
       openModal: (state) => {
@@ -51,13 +50,13 @@ export const {
   setPassword,
   setFirstName,
   setLastName,
-  setUserName, } = modalSlice.actions;
+  setUserName, } = modalSignUpSlice.actions;
 
   // Sélecteurs
-export const selectAuthEmail = (state) => state.modal.auth.email;
-export const selectAuthPassword = (state) => state.modal.auth.password;
-export const selectAuthFirstName = (state) => state.modal.auth.firstName;
-export const selectAuthLastName = (state) => state.modal.auth.lastName;
-export const selectAuthUserName = (state) => state.modal.auth.userName;
+export const selectAuthEmail = (state) => state.SignUp.auth.email;
+export const selectAuthPassword = (state) => state.SignUp.auth.password;
+export const selectAuthFirstName = (state) => state.SignUp.auth.firstName;
+export const selectAuthLastName = (state) => state.SignUp.auth.lastName;
+export const selectAuthUserName = (state) => state.SignUp.auth.userName;
 
-export default modalSlice.reducer;
+export default modalSignUpSlice.reducer;

@@ -13,14 +13,14 @@ import {
   selectAuthFirstName,
   selectAuthLastName,
   selectAuthUserName,
-} from "../Slice/modalSlice";
+} from "../Slice/modalSignUpSlice";
 
 const ModalSignUp = () => {
   useEffect(() => {
     dispatch(closeModal()); // Fermer la modal lors du chargement de la page
   }, []);
 
-  const isOpen = useSelector((state) => state.modal.isOpen);
+  const isOpen = useSelector((state) => state.SignUp.isOpen);
   const dispatch = useDispatch();
   const email = useSelector(selectAuthEmail);
   const password = useSelector(selectAuthPassword);

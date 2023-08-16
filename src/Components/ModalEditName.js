@@ -2,7 +2,7 @@ import "../Styles/index.css";
 
 function ModalEditName() {
   return (
-    <section className="aa">
+    <section className="section-edit-name">
       <h1>Edit user info</h1>
 
       <div className="modal-edit-user">

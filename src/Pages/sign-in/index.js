@@ -9,7 +9,7 @@ import {
   setRememberMe,
 } from "../../Slice/authSlice";
 import ModalSignUp from "../../Components/ModalSignUp";
-import { openModal, closeModal  } from "../../Slice/modalSlice";
+import { openModal, closeModal  } from "../../Slice/modalSignUpSlice";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -39,7 +39,7 @@ function Signin() {
     dispatch(openModal());
   };
 
-  const isOpen = useSelector((state) => state.modal.isOpen);
+  const isOpen = useSelector((state) => state.SignUp.isOpen);
 
   const handleToggleModal = () => {
     if (isOpen) {

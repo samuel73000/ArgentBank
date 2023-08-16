@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import modalReducer from '../Slice/modalSlice'
+import modalSignUpReducer from '../Slice/modalSignUpSlice'
 import authReducer from '../Slice/authSlice';
+import ModalEditNameReducer from '../Slice/modalEditNameSlice';
 
 
 const rootReducer = {
-  modal: modalReducer,
+  SignUp: modalSignUpReducer,
   auth: authReducer,
-  
+  EditName: ModalEditNameReducer,
   
 };
 
