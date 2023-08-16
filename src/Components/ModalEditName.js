@@ -1,7 +1,6 @@
 import "../Styles/index.css";
-import React, { useEffect } from 'react';
 import { useDispatch ,useSelector } from "react-redux";
-import { hideModal , setUserName,setFirstName,setLastName} from "../Slice/modalEditNameSlice";
+import { hideModal } from "../Slice/modalEditNameSlice";
 
 
 
@@ -9,47 +8,17 @@ import { hideModal , setUserName,setFirstName,setLastName} from "../Slice/modalE
 function ModalEditName() {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.EditName.userData);
-  const token = useSelector((state) => state.auth.authToken)
-
-
-
-
-  useEffect(() => {
-    dispatch(fetchProfile(token));
-  }, [dispatch, token]);
-
+ 
   
 
-
-  const fetchProfile = (token) => {
-    return async (dispatch) => {
-      try {
-        const response = await fetch("http://localhost:3001/api/v1/user/profile", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({}),
-        });
-  
-        if (!response.ok) {
-          // dispatch(setUserData.userName(data.body.userName));
-          throw new Error("Network response was not ok");
-        }
-  
-        const data = await response.json();
-        dispatch(setUserName(data.body.userName));
-        dispatch(setFirstName(data.body.firstName));
-        dispatch(setLastName(data.body.lastName));
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const handleSaveClick  = () => {
+    
+    // Envoyez userNameInput au backend ici
+    // dispatch(setUserName(userNameInput));
   };
+
   
+   
     const handleCancelClick = () => {
         dispatch(hideModal());
     };
@@ -70,7 +39,7 @@ function ModalEditName() {
         <input id="lastname" className="input-edit-user" type="text" disabled="disabled" value={userData.lastName}></input>
       </div>
       <div className="div-btn-edit-name">
-      <button className="btn-edit-name">Save</button>
+      <button className="btn-edit-name" onClick={handleSaveClick}>Save</button>
       <button className="btn-edit-name" onClick={handleCancelClick}>Cancel</button>
       </div>
     </section>

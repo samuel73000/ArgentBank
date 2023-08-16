@@ -2,7 +2,8 @@ import Accounts from "../../Components/Accounts";
 import "../../Styles/index.css";
 import ModalEditName from "../../Components/ModalEditName";
 import { useSelector, useDispatch } from "react-redux";
-import { hideEditButton } from "../../Slice/modalEditNameSlice";
+import { hideEditButton ,setFirstName,setLastName ,setUserName} from "../../Slice/modalEditNameSlice";
+import React, { useEffect } from 'react';
 
 
 function User() {
@@ -11,19 +12,57 @@ function User() {
       amount: ["$2,082.79", "$10,928.42", "$184.30"],
       description: ["Available Balance", "Available Balance", "Current Balance"],
   };
-
+  const handleEditButtonClick = () => {
+    dispatch(hideEditButton());
+};
   const dispatch = useDispatch();
   const { showEditButton, showModal, showWelcomeMessage } = useSelector(state => state.EditName);
+  const userData = useSelector((state) => state.EditName.userData);
+  const token = useSelector((state) => state.auth.authToken)// on prend token 
+  useEffect(() => {// permet que la function fetchPorfile sa fasse au chargement de la page 
+    dispatch(fetchProfile(token));
+  }, [dispatch, token]);
 
-  const handleEditButtonClick = () => {
-      dispatch(hideEditButton());
+  const fetchProfile = (token) => {//call api pour recuper infi de utilisateur avec le token que j'ai mis dans le localStorage depuis la connection
+    return async (dispatch) => {
+      try {
+        const response = await fetch("http://localhost:3001/api/v1/user/profile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({}),
+        });
+  
+        if (!response.ok) {
+          // dispatch(setUserData.userName(data.body.userName));
+          throw new Error("Network response was not ok");
+        }
+  
+        const data = await response.json();
+        dispatch(setUserName(data.body.userName));
+        dispatch(setFirstName(data.body.firstName));
+        dispatch(setLastName(data.body.lastName));
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
   };
+
+
+
+
+
+  
 
   return (
       <div>
           <main className="main bg-dark">
               <div className="header">
-                  {showWelcomeMessage && <h1>Welcome back<br />Tony Jarvis!</h1>}
+                  {showWelcomeMessage && <h1>Welcome back<br />{userData.firstName} {userData.lastName}</h1>}
                   {showEditButton && <button className="edit-button" onClick={handleEditButtonClick}>Edit Name</button>}
                   {showModal && <ModalEditName />}
               </div>
