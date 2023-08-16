@@ -1,9 +1,62 @@
 import "../Styles/index.css";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector } from "react-redux";
 import { hideModal } from "../Slice/modalEditNameSlice";
+
+
+
 
 function ModalEditName() {
   const dispatch = useDispatch();
+  
+
+
+
+
+
+  const token = useSelector((state) => state.auth.authToken)
+
+  const handleSaveClick = async () => {
+    try {
+      await dispatch(fetchProfile(token)); // Appel de la fonction fetchProfile
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+
+  const fetchProfile = (token) => {
+    return async (dispatch) => {
+      try {
+        const response = await fetch("http://localhost:3001/api/v1/user/profile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({}),
+        });
+  
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+  
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  };
+  
+
+
+
+
+
+
+
 
     const handleCancelClick = () => {
         dispatch(hideModal());
@@ -25,7 +78,7 @@ function ModalEditName() {
         <input id="lastname" className="input-edit-user" type="text" disabled="disabled"></input>
       </div>
       <div className="div-btn-edit-name">
-      <button className="btn-edit-name">Save</button>
+      <button className="btn-edit-name" onClick={handleSaveClick} >Save</button>
       <button className="btn-edit-name" onClick={handleCancelClick}>Cancel</button>
       </div>
     </section>
@@ -33,3 +86,28 @@ function ModalEditName() {
 }
 
 export default ModalEditName;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

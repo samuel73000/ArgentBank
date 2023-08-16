@@ -85,10 +85,10 @@ function Signin() {
         const data = await response.json();
         dispatch(setEmailSignIn("")); // Clear email
         dispatch(setPasswordSignIn("")); // Clear password
-        dispatch(setAuthToken(data.authToken));
+        dispatch(setAuthToken(data.body.token));
         dispatch(setIsLoggedIn(true)); // il est connecter
         dispatch(setLoginMessage("Connexion réussie"));
-        localStorage.setItem("authToken", data.authToken);
+        localStorage.setItem("authToken", data.body.token);
         navigate("/user")
         // si le mdp et email sont pas ok
       } else {
