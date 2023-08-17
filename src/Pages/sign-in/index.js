@@ -22,6 +22,7 @@ function Signin() {
     // Restaure les valeurs enregistrées lors du chargement initial
     const storedEmail = localStorage.getItem("rememberedEmail");
     const storedPassword = localStorage.getItem("rememberedPassword");
+    dispatch(setLoginMessage(""));//on supprime le message Connexion réussie de la connexion d'avant
     if (storedEmail) {
       dispatch(setEmailSignIn(storedEmail));
     }
