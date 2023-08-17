@@ -32,8 +32,11 @@ const modalEditNameSlice = createSlice({
         setLastName: (state, action) => {
             state.userData.lastName = action.payload;
         },
+        updateUserName: (state, action) => {
+            state.userData.userName = action.payload;
+          },
     },
 });
 
-export const { hideEditButton , hideModal,setUserName ,setFirstName,setLastName} = modalEditNameSlice.actions;
+export const { hideEditButton , hideModal,setUserName ,setFirstName,setLastName,updateUserName} = modalEditNameSlice.actions;
 export default modalEditNameSlice.reducer;
