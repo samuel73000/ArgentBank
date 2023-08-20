@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setAuthToken,
   setLoginMessage,
-  setEmailSignIn,
-  setPasswordSignIn,
+  setSignInCredentials,
   setIsLoggedIn,
   setRememberMe,
 } from "../../Slice/authSlice";
@@ -15,21 +14,22 @@ import { useNavigate } from "react-router-dom";
 
 function Signin() {
   //remember me
-
+  const dispatch = useDispatch();
   const rememberMe = useSelector((state) => state.auth.rememberMe); // Obtenez l'état de "Remember Me"
 
   useEffect(() => {
     // Restaure les valeurs enregistrées lors du chargement initial
     const storedEmail = localStorage.getItem("rememberedEmail");
     const storedPassword = localStorage.getItem("rememberedPassword");
-    dispatch(setLoginMessage(""));//on supprime le message Connexion réussie de la connexion d'avant
-    if (storedEmail) {
-      dispatch(setEmailSignIn(storedEmail));
+    dispatch(setLoginMessage("")); // on supprime le message Connexion réussie de la connexion précédente
+    if (storedEmail && storedPassword) {
+      // Utilisez l'action setSignInCredentials pour charger les valeurs
+      dispatch(setSignInCredentials({ email: storedEmail, password: storedPassword }));
+    } else {
+      // Si aucune valeur n'est stockée, effacez l'e-mail et le mot de passe
+      dispatch(setSignInCredentials({ email: '', password: '' }));
     }
-    if (storedPassword) {
-      dispatch(setPasswordSignIn(storedPassword));
-    }
-  }, []);
+  }, [dispatch]);
   const handleRememberMeChange = () => {
     // Gère le changement de la case à cocher "Remember Me"
     dispatch(setRememberMe(!rememberMe));
@@ -51,11 +51,11 @@ function Signin() {
   };
 
   // connection
-  const dispatch = useDispatch();
+  
   const authToken = useSelector((state) => state.auth.authToken);
   const loginMessage = useSelector((state) => state.auth.loginMessage);
-  const email = useSelector((state) => state.auth.emailSignIn); // Get email
-  const password = useSelector((state) => state.auth.passwordSignIn); // Get password
+  const email = useSelector((state) => state.auth.signInCredentials.email); // Get email
+  const password = useSelector((state) => state.auth.signInCredentials.password); // Get password
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Get login status
   const navigate = useNavigate();
   // post l'email et et mdp
@@ -84,8 +84,7 @@ function Signin() {
       //  si le mdp et email sont ok
       if (response.ok) {
         const data = await response.json();
-        dispatch(setEmailSignIn("")); // Clear email
-        dispatch(setPasswordSignIn("")); // Clear password
+        dispatch(setSignInCredentials("")); // Clear email et Clear password
         dispatch(setAuthToken(data.body.token));
         dispatch(setIsLoggedIn(true)); // il est connecter
         dispatch(setLoginMessage("Connexion réussie"));
@@ -119,7 +118,7 @@ function Signin() {
                 id="username"
                 value={email}
                 onChange={(e) => {
-                  dispatch(setEmailSignIn(e.target.value));
+                  dispatch(setSignInCredentials({ email: e.target.value, password }));
                 }}
               />
             </div>
@@ -130,7 +129,7 @@ function Signin() {
                 id="password"
                 value={password}
                 onChange={(e) => {
-                  dispatch(setPasswordSignIn(e.target.value));
+                  dispatch(setSignInCredentials({ email, password: e.target.value }));
                 }}
               />
             </div>

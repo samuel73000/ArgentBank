@@ -5,10 +5,12 @@ const authSlice = createSlice({
   initialState: {
     authToken: null,
     loginMessage: '',
-    emailSignIn: '',
-    passwordSignIn: '',
     isLoggedIn: false, 
     rememberMe: false,
+    signInCredentials: {
+      email: '',
+      password: '',
+    },
   },
   reducers: {
     setAuthToken: (state, action) => {
@@ -17,11 +19,10 @@ const authSlice = createSlice({
     setLoginMessage: (state, action) => {
       state.loginMessage = action.payload;
     },
-    setEmailSignIn: (state, action) => {
-      state.emailSignIn = action.payload;
-    },
-    setPasswordSignIn: (state, action) => {
-      state.passwordSignIn = action.payload;
+    setSignInCredentials: (state, action) => {
+      const { email, password } = action.payload;
+      state.signInCredentials.email = email;
+      state.signInCredentials.password = password;
     },
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
@@ -38,5 +39,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthToken, setLoginMessage , setEmailSignIn, setPasswordSignIn , setIsLoggedIn ,clearAuthData , setIsModalOpen , setRememberMe,} = authSlice.actions;
+export const { setAuthToken, setLoginMessage ,setSignInCredentials , setIsLoggedIn ,clearAuthData , setIsModalOpen , setRememberMe,} = authSlice.actions;
 export default authSlice.reducer;
