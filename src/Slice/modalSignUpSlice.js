@@ -24,33 +24,19 @@ const initialState = {
         state.isOpen = false;
         localStorage.setItem('modalOpen', 'false');
       },
-      setEmail: (state, action) => {
-        state.auth.email = action.payload;
-      },
-      setPassword: (state, action) => {
-        state.auth.password = action.payload;
-      },
-      setFirstName: (state, action) => {
-        state.auth.firstName = action.payload;
-      },
-      setLastName: (state, action) => {
-        state.auth.lastName = action.payload;
-      },
-      setUserName: (state, action) => {
-        state.auth.userName = action.payload;
-      },
-      
+      setAuthField: (state, action) => {
+        const { field, value } = action.payload;
+        if (field in state.auth) {
+          state.auth[field] = value;
+        }
+      }
     },
   });
 
 export const {
   openModal,
   closeModal,
-  setEmail,
-  setPassword,
-  setFirstName,
-  setLastName,
-  setUserName, } = modalSignUpSlice.actions;
+  setAuthField, } = modalSignUpSlice.actions;
 
   // Sélecteurs
 export const selectAuthEmail = (state) => state.SignUp.auth.email;

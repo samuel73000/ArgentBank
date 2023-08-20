@@ -2,11 +2,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import {
-  setEmail,
-  setPassword,
-  setFirstName,
-  setLastName,
-  setUserName,
+  setAuthField,
   closeModal,
   selectAuthEmail,
   selectAuthPassword,
@@ -67,7 +63,7 @@ const ModalSignUp = () => {
             placeholder="E-mail"
             value={email}
             onChange={(e) => {
-              dispatch(setEmail(e.target.value));
+              dispatch(setAuthField({ field: "email", value: e.target.value }));
             }}
           ></input>
         </div>
@@ -78,7 +74,7 @@ const ModalSignUp = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => {
-              dispatch(setPassword(e.target.value));
+              dispatch(setAuthField({ field: "password", value: e.target.value }));
             }}
           ></input>
         </div>
@@ -89,7 +85,7 @@ const ModalSignUp = () => {
             placeholder="First Name"
             value={firstName}
             onChange={(e) => {
-              dispatch(setFirstName(e.target.value));
+              dispatch(setAuthField({ field: "firstName", value: e.target.value }));
             }}
           ></input>
         </div>
@@ -100,7 +96,7 @@ const ModalSignUp = () => {
             placeholder="Last Name"
             value={lastName}
             onChange={(e) => {
-              dispatch(setLastName(e.target.value));
+              dispatch(setAuthField({ field: "lastName", value: e.target.value }));
             }}
           ></input>
         </div>
@@ -111,7 +107,7 @@ const ModalSignUp = () => {
             placeholder="User Name"
             value={userName}
             onChange={(e) => {
-              dispatch(setUserName(e.target.value));
+              dispatch(setAuthField({ field: "userName", value: e.target.value }));
             }}
           ></input>
         </div>
