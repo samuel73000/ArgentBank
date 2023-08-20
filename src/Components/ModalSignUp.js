@@ -10,6 +10,7 @@ import {
   selectAuthLastName,
   selectAuthUserName,
 } from "../Slice/modalSignUpSlice";
+import { signUpUser } from "../Data/api";
 
 const ModalSignUp = () => {
   useEffect(() => {
@@ -23,32 +24,14 @@ const ModalSignUp = () => {
   const firstName = useSelector(selectAuthFirstName);
   const lastName = useSelector(selectAuthLastName);
   const userName = useSelector(selectAuthUserName);
-  const handleSignUp = () => {
-    fetch("http://localhost:3001/api/v1/user/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        userName: userName,
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          dispatch(closeModal());
-          return response.json();
-        } else {
-          dispatch(closeModal());
-          throw new Error("Échec de l'inscription");
-        }
-      })
-      .catch((error) => {
-        console.error("Erreur lors de l'inscription :", error);
-      });
+ //call api
+  const handleSignUp = async () => {
+    try {
+      const response = await signUpUser(email, password, firstName, lastName, userName);
+      dispatch(closeModal());
+    } catch (error) {
+      console.error("Erreur lors de l'inscription :", error);
+    }
   };
 
   if (!isOpen) return null;

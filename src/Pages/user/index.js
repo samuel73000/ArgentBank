@@ -8,6 +8,7 @@ import {
   hideModal,
 } from "../../Slice/modalEditNameSlice";
 import React, { useEffect } from "react";
+import { fetchUserProfile } from "../../Data/api";
 
 function User() {
   const Account = {
@@ -28,46 +29,29 @@ function User() {
   );
   const userData = useSelector((state) => state.EditName.userData);
   const token = useSelector((state) => state.auth.authToken); // on prend token
-  useEffect(() => {
-    // permet que la function fetchPorfile sa fasse au chargement de la page
-    dispatch(fetchProfile(token));
-  }, [dispatch, token]);
   // Fermer la modal au chargement de la page
 useEffect(() => {
   dispatch(hideModal());
 }, []);
 
 
-  const fetchProfile = (token) => {
-    //call api pour recuper infi de utilisateur avec le token que j'ai mis dans le localStorage depuis la connection
-    return async (dispatch) => {
-      try {
-        const response = await fetch(
-          "http://localhost:3001/api/v1/user/profile",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({}),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-                // Utilisez l'action setUserDetails pour mettre à jour les détails de l'utilisateur
-        dispatch(setUserDetails({ userName: data.body.userName, firstName: data.body.firstName, lastName: data.body.lastName }));
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  };
+useEffect(() => {
+  // Appel de la fonction fetchUserProfile au chargement de la page
+  fetchUserProfile(token)
+    .then((userProfile) => {
+      dispatch(
+        setUserDetails({
+          userName: userProfile.userName,
+          firstName: userProfile.firstName,
+          lastName: userProfile.lastName,
+        })
+      );
+      console.log(userProfile);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}, [dispatch, token]);
 
   return (
     <div>

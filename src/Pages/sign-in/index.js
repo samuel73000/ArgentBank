@@ -11,6 +11,7 @@ import ModalSignUp from "../../Components/ModalSignUp";
 import { openModal, closeModal  } from "../../Slice/modalSignUpSlice";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../Data/api";
 
 function Signin() {
   //remember me
@@ -58,48 +59,28 @@ function Signin() {
   const password = useSelector((state) => state.auth.signInCredentials.password); // Get password
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Get login status
   const navigate = useNavigate();
-  // post l'email et et mdp
+//call api  
   const handleLogin = async () => {
     if (rememberMe) {
-      // localStorage pour le remember me
       localStorage.setItem("rememberedEmail", email);
       localStorage.setItem("rememberedPassword", password);
     } else {
       localStorage.removeItem("rememberedEmail");
       localStorage.removeItem("rememberedPassword");
     }
-
+  
     try {
-      // 
-      const response = await fetch("http://localhost:3001/api/v1/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-      //  si le mdp et email sont ok
-      if (response.ok) {
-        const data = await response.json();
-        dispatch(setSignInCredentials("")); // Clear email et Clear password
-        dispatch(setAuthToken(data.body.token));
-        dispatch(setIsLoggedIn(true)); // il est connecter
-        dispatch(setLoginMessage("Connexion réussie"));
-        localStorage.setItem("authToken", data.body.token);
-        navigate("/user")
-        console.log(data.body.token)
-        // si le mdp et email sont pas ok
-      } else {
-        console.error("Échec de la connexion");
-        dispatch(setLoginMessage("Mot de passe ou email incorrects."));
-      }
-      // si il a un probleme avec l'api
+      const authToken = await loginUser(email, password);
+      dispatch(setSignInCredentials("")); // Clear email et Clear password
+      dispatch(setAuthToken(authToken));
+      dispatch(setIsLoggedIn(true)); // il est connecté
+      dispatch(setLoginMessage("Connexion réussie"));
+      localStorage.setItem("authToken", authToken);
+      navigate("/user");
+      console.log(authToken);
     } catch (error) {
-      dispatch(setLoginMessage("Erreur lors de la connexion : " + error));
-      console.error("Erreur lors de la connexion :", error);
+      console.error("Échec de la connexion");
+      dispatch(setLoginMessage(error.message));
     }
   };
 

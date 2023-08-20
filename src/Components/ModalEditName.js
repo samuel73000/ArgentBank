@@ -1,6 +1,7 @@
 import "../Styles/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { hideModal, updateUserName } from "../Slice/modalEditNameSlice";
+import { updateUserNameAPI } from "../Data/api";
 
 function ModalEditName() {
   const dispatch = useDispatch();
@@ -13,30 +14,16 @@ function ModalEditName() {
   };
   // btn save on recuper le token pour le call api et on envoie le nouveau username avec la method PUT
   const token = useSelector((state) => state.auth.authToken);
+  //call api
   const handleSaveClick = async () => {
-    const updatedUserName = userData.userName;
-
-    //  structure attendue par l'API
-    const requestBody = {
-      userName: updatedUserName,
-    };
-
-    const response = await fetch("http://localhost:3001/api/v1/user/profile", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    if (response.ok) {
+    try {
+      const updatedUserName = userData.userName;
+      const response = await updateUserNameAPI(token, updatedUserName);
       dispatch(hideModal());
-    } else {
-      throw new Error("Erreur lors de la mise à jour");
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour :", error);
     }
   };
-
   //  btn cancel on ferme la modal
   const handleCancelClick = () => {
     dispatch(hideModal());
