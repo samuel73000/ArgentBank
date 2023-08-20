@@ -4,9 +4,7 @@ import ModalEditName from "../../Components/ModalEditName";
 import { useSelector, useDispatch } from "react-redux";
 import {
   hideEditButton,
-  setFirstName,
-  setLastName,
-  setUserName,
+  setUserDetails,
   hideModal,
 } from "../../Slice/modalEditNameSlice";
 import React, { useEffect } from "react";
@@ -58,14 +56,12 @@ useEffect(() => {
         );
 
         if (!response.ok) {
-          // dispatch(setUserData.userName(data.body.userName));
           throw new Error("Network response was not ok");
         }
 
         const data = await response.json();
-        dispatch(setUserName(data.body.userName));
-        dispatch(setFirstName(data.body.firstName));
-        dispatch(setLastName(data.body.lastName));
+                // Utilisez l'action setUserDetails pour mettre à jour les détails de l'utilisateur
+        dispatch(setUserDetails({ userName: data.body.userName, firstName: data.body.firstName, lastName: data.body.lastName }));
         console.log(data);
       } catch (error) {
         console.error(error);
