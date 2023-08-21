@@ -60,7 +60,8 @@ function Signin() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Get login status
   const navigate = useNavigate();
 //call api  
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault(); 
     if (rememberMe) {
       localStorage.setItem("rememberedEmail", email);
       localStorage.setItem("rememberedPassword", password);
@@ -91,7 +92,7 @@ function Signin() {
           <i class="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
           <p>{loginMessage}</p>
-          <form>
+          <form onSubmit={handleLogin}>
             <div class="input-wrapper">
               <label for="username">Username</label>
               <input
@@ -123,7 +124,7 @@ function Signin() {
               />
               <label for="remember-me">Remember me</label>
             </div>
-            <button class="sign-in-button" onClick={handleLogin} type="button">
+            <button class="sign-in-button"  type="submit">
               Sign In
             </button>
             <button
