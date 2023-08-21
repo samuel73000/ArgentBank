@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { NavLink  ,useNavigate  } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAuthData, setIsLoggedIn } from "../Slice/authSlice";
+import {setUserDetails} from "../Slice/modalEditNameSlice";
 
 
 function Header() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Utilisation de useSelector pour extraire isLoggedIn du state
+  const userData = useSelector((state) => state.EditName.userData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
  
@@ -47,7 +49,9 @@ function Header() {
               onClick={handleLogout}
               type="button"
             >
-              <i class="fa fa-user-circle"></i>
+              <i class="fa fa-user-circle user-circle"></i>
+              {userData.userName}
+              <i class="fa fa-sign-out sign-out"></i>
               <span>Sign-Out</span>
 
             </button>
