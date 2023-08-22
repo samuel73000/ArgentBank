@@ -48,10 +48,10 @@ export const loginUser = async (email, password) => {
     }
   };
 
-  export const updateUserNameAPI = async (token, updatedUserName) => {
+  export const updateUserNameAPI = async (token, updateUserName ) => {
     try {
       const requestBody = {
-        userName: updatedUserName,
+        userName: updateUserName,
       };
   
       const response = await fetch("http://localhost:3001/api/v1/user/profile", {
