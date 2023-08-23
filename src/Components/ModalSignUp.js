@@ -11,7 +11,6 @@ import {
   selectAuthUserName,
 } from "../Slice/modalSignUpSlice";
 import { signUpUser } from "../Data/api";
-
 const ModalSignUp = () => {
   useEffect(() => {
     dispatch(closeModal()); // Fermer la modal lors du chargement de la page
@@ -24,10 +23,16 @@ const ModalSignUp = () => {
   const firstName = useSelector(selectAuthFirstName);
   const lastName = useSelector(selectAuthLastName);
   const userName = useSelector(selectAuthUserName);
- //call api
+  //call api
   const handleSignUp = async () => {
     try {
-      const response = await signUpUser(email, password, firstName, lastName, userName);
+      const response = await signUpUser(
+        email,
+        password,
+        firstName,
+        lastName,
+        userName
+      );
       dispatch(closeModal());
     } catch (error) {
       console.error("Erreur lors de l'inscription :", error);
@@ -57,7 +62,9 @@ const ModalSignUp = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => {
-              dispatch(setAuthField({ field: "password", value: e.target.value }));
+              dispatch(
+                setAuthField({ field: "password", value: e.target.value })
+              );
             }}
           ></input>
         </div>
@@ -68,7 +75,9 @@ const ModalSignUp = () => {
             placeholder="First Name"
             value={firstName}
             onChange={(e) => {
-              dispatch(setAuthField({ field: "firstName", value: e.target.value }));
+              dispatch(
+                setAuthField({ field: "firstName", value: e.target.value })
+              );
             }}
           ></input>
         </div>
@@ -79,7 +88,9 @@ const ModalSignUp = () => {
             placeholder="Last Name"
             value={lastName}
             onChange={(e) => {
-              dispatch(setAuthField({ field: "lastName", value: e.target.value }));
+              dispatch(
+                setAuthField({ field: "lastName", value: e.target.value })
+              );
             }}
           ></input>
         </div>
@@ -90,7 +101,9 @@ const ModalSignUp = () => {
             placeholder="User Name"
             value={userName}
             onChange={(e) => {
-              dispatch(setAuthField({ field: "userName", value: e.target.value }));
+              dispatch(
+                setAuthField({ field: "userName", value: e.target.value })
+              );
             }}
           ></input>
         </div>

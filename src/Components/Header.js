@@ -46,20 +46,18 @@ function Header() {
         <div>
           {isLoggedIn ? (
             <div>
-              <button className={"main-nav-item"}
-              onClick={handleUser}>
-              <i class="fa fa-user-circle user-circle"></i>
-            {userData.userName}
-            </button>
-            <button
-              className={"main-nav-item"}
-              onClick={handleLogout}
-              type="button"
-            >
-              
-              <i class="fa fa-sign-out sign-out"></i>
-              <span>Sign-Out</span>
-            </button>
+              <button className={"main-nav-item"} onClick={handleUser}>
+                <i class="fa fa-user-circle user-circle"></i>
+                {userData.userName}
+              </button>
+              <button
+                className={"main-nav-item"}
+                onClick={handleLogout}
+                type="button"
+              >
+                <i class="fa fa-sign-out sign-out"></i>
+                <span>Sign-Out</span>
+              </button>
             </div>
           ) : (
             <button

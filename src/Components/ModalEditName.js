@@ -7,7 +7,6 @@ function ModalEditName() {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.EditName.userData);
 
-
   //  function que on appele dans le onchange du premier input pour stocker le changement
   const handleUserNameChange = (newUserName) => {
     dispatch(updateUserName(newUserName));
