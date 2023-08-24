@@ -2,22 +2,26 @@ import "../Styles/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { hideModal, updateUserName } from "../Slice/modalEditNameSlice";
 import { updateUserNameAPI } from "../Data/api";
+import { useState } from "react";
+
 
 function ModalEditName() {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.EditName.userData);
-
-  //  function que on appele dans le onchange du premier input pour stocker le changement
+// Créez une copie locale du nom d'utilisateur pour stocker les modifications
+const [localUserName, setLocalUserName] = useState(userData.userName);
+ 
   const handleUserNameChange = (newUserName) => {
-    dispatch(updateUserName(newUserName));
+    setLocalUserName(newUserName); // Mettez à jour localUserName avec la nouvelle valeur de l'input
   };
   // btn save on recuper le token pour le call api et on envoie le nouveau username avec la method PUT
   const token = useSelector((state) => state.auth.authToken);
   //call api
   const handleSaveClick = async () => {
     try {
-      const updatedUserName = userData.userName;
-      const response = await updateUserNameAPI(token, updatedUserName);
+      const response = await updateUserNameAPI(token, localUserName);
+      // Après la mise à jour réussie de l'API, mettez à jour le Redux Store
+      dispatch(updateUserName(localUserName));
       dispatch(hideModal());
     } catch (error) {
       console.error("Erreur lors de la mise à jour :", error);
@@ -37,7 +41,7 @@ function ModalEditName() {
         <input
           id="username"
           className="input-edit-user"
-          value={userData.userName}
+          value={localUserName}
           onChange={(e) => handleUserNameChange(e.target.value)}
         ></input>
       </div>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAuthData, setIsLoggedIn } from "../Slice/authSlice";
-import { setUserDetails } from "../Slice/modalEditNameSlice";
+import { setUserDetails, updateUserName } from "../Slice/modalEditNameSlice";
 
 function Header() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Utilisation de useSelector pour extraire isLoggedIn du state
