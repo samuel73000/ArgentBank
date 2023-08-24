@@ -19,10 +19,11 @@ const authSlice = createSlice({
       state.authToken = null;
       state.rememberMe = false;
       // Réinitialisez d'autres propriétés d'état liées à l'authentification si nécessaire
-    },
+    },  
     setRememberMe: (state, action) => {
       state.rememberMe = action.payload;
     },
+    
   },
 });
 

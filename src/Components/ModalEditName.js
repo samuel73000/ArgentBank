@@ -10,7 +10,6 @@ function ModalEditName() {
   const userData = useSelector((state) => state.EditName.userData);
 // Créez une copie locale du nom d'utilisateur pour stocker les modifications
 const [localUserName, setLocalUserName] = useState(userData.userName);
- 
   const handleUserNameChange = (newUserName) => {
     setLocalUserName(newUserName); // Mettez à jour localUserName avec la nouvelle valeur de l'input
   };
