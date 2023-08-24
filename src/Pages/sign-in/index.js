@@ -22,8 +22,8 @@ function Signin() {
 
   useEffect(() => {
     // Restaure les valeurs enregistrées lors du chargement initial
-    const storedEmail = localStorage.getItem("rememberedEmail");
-    const storedPassword = localStorage.getItem("rememberedPassword");
+    const storedEmail = getCookie("rememberedEmail");
+    const storedPassword = getCookie("rememberedPassword");
     setLoginMessage(""); // on supprime le message Connexion réussie de la connexion précédente
 
     if (rememberMe && token) {
@@ -65,11 +65,11 @@ function Signin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (rememberMe) {
-      localStorage.setItem("rememberedEmail", email);
-      localStorage.setItem("rememberedPassword", password);
+      setCookie("rememberedEmail", email, 30); // Cookie expirera dans 30 jours
+      setCookie("rememberedPassword", password, 30);
     } else {
-      localStorage.removeItem("rememberedEmail");
-      localStorage.removeItem("rememberedPassword");
+      deleteCookie("rememberedEmail");
+      deleteCookie("rememberedPassword");
     }
     try {
       const authToken = await loginUser(email, password);
@@ -86,6 +86,41 @@ function Signin() {
       console.error("Échec de la connexion");
     }
   };
+
+
+// Fonction pour définir un cookie
+const setCookie = (name, value, days) => {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+};
+
+// Fonction pour récupérer la valeur d'un cookie par son nom
+const getCookie = (name) => {
+  const cookieName = name + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(";");
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) === " ") {
+      cookie = cookie.substring(1);
+    }
+    if (cookie.indexOf(cookieName) === 0) {
+      return cookie.substring(cookieName.length, cookie.length);
+    }
+  }
+  return "";
+};
+
+// Fonction pour supprimer un cookie par son nom
+const deleteCookie = (name) => {
+  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
+
+
+
+
 
   return (
     <div>
