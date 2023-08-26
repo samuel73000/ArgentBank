@@ -65,7 +65,7 @@ const [localUserName, setLocalUserName] = useState(userData.userName);
         ></input>
       </div>
       <div className="div-btn-edit-name">
-        <button className="btn-edit-name" onClick={handleSaveClick}>
+        <button className="btn-edit-name"  onClick={handleSaveClick} >
           Save
         </button>
         <button className="btn-edit-name" onClick={handleCancelClick}>
