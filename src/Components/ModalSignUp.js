@@ -1,28 +1,15 @@
-// import { useSelector, useDispatch } from "react-redux";
-import { useSelector, useDispatch } from "react-redux";
-import React, { useEffect } from "react";
-import {
-  setAuthField,
-  closeModal,
-  selectAuthEmail,
-  selectAuthPassword,
-  selectAuthFirstName,
-  selectAuthLastName,
-  selectAuthUserName,
-} from "../Slice/modalSignUpSlice";
+import React, { useState} from "react";
 import { signUpUser } from "../Data/api";
 const ModalSignUp = () => {
-  useEffect(() => {
-    dispatch(closeModal()); // Fermer la modal lors du chargement de la page
-  }, []);
 
-  const isOpen = useSelector((state) => state.SignUp.isOpen);
-  const dispatch = useDispatch();
-  const email = useSelector(selectAuthEmail);
-  const password = useSelector(selectAuthPassword);
-  const firstName = useSelector(selectAuthFirstName);
-  const lastName = useSelector(selectAuthLastName);
-  const userName = useSelector(selectAuthUserName);
+  
+
+  //États locaux pour gérer les données du formulaire
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
   //call api
   const handleSignUp = async () => {
     try {
@@ -33,13 +20,11 @@ const ModalSignUp = () => {
         lastName,
         userName
       );
-      dispatch(closeModal());
     } catch (error) {
       console.error("Erreur lors de l'inscription :", error);
     }
   };
 
-  if (!isOpen) return null;
 
   return (
     <div className="modal">
@@ -50,9 +35,7 @@ const ModalSignUp = () => {
             type="email"
             placeholder="E-mail"
             value={email}
-            onChange={(e) => {
-              dispatch(setAuthField({ field: "email", value: e.target.value }));
-            }}
+            onChange={(e) => setEmail(e.target.value)}
           ></input>
         </div>
         <div className="input-wrapper">
@@ -61,11 +44,7 @@ const ModalSignUp = () => {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => {
-              dispatch(
-                setAuthField({ field: "password", value: e.target.value })
-              );
-            }}
+            onChange={(e) => setPassword(e.target.value)}
           ></input>
         </div>
         <div className="input-wrapper">
@@ -74,11 +53,7 @@ const ModalSignUp = () => {
             type="text"
             placeholder="First Name"
             value={firstName}
-            onChange={(e) => {
-              dispatch(
-                setAuthField({ field: "firstName", value: e.target.value })
-              );
-            }}
+            onChange={(e) => setFirstName(e.target.value)}
           ></input>
         </div>
         <div className="input-wrapper">
@@ -87,11 +62,7 @@ const ModalSignUp = () => {
             type="text"
             placeholder="Last Name"
             value={lastName}
-            onChange={(e) => {
-              dispatch(
-                setAuthField({ field: "lastName", value: e.target.value })
-              );
-            }}
+            onChange={(e) => setLastName(e.target.value)}
           ></input>
         </div>
         <div className="input-wrapper">
@@ -100,11 +71,7 @@ const ModalSignUp = () => {
             type="text"
             placeholder="User Name"
             value={userName}
-            onChange={(e) => {
-              dispatch(
-                setAuthField({ field: "userName", value: e.target.value })
-              );
-            }}
+            onChange={(e) => setUserName(e.target.value)}
           ></input>
         </div>
         <button className="sign-in-button" onClick={handleSignUp}>

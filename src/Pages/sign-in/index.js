@@ -6,12 +6,11 @@ import {
   setRememberMe,
 } from "../../Slice/authSlice";
 import ModalSignUp from "../../Components/ModalSignUp";
-import { openModal, closeModal } from "../../Slice/modalSignUpSlice";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../Data/api";
 
-function Signin() {
+function Signin(props) {
   //remember me
   const dispatch = useDispatch();
   const rememberMe = useSelector((state) => state.auth.rememberMe); // Obtenez l'état de "Remember Me"
@@ -19,6 +18,8 @@ function Signin() {
   const [password, setPassword] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
   const token = useSelector((state) => state.auth.authToken);
+  const [ModalIsOpen, setModalIsOpen] = useState(false);
+
 
   useEffect(() => {
     // Restaure les valeurs enregistrées lors du chargement initial
@@ -43,19 +44,10 @@ function Signin() {
 
   // modale pour s'inscrire
   const handleOpenModal = () => {
-    dispatch(openModal());
+    setModalIsOpen(!ModalIsOpen);
   };
 
-  const isOpen = useSelector((state) => state.SignUp.isOpen);
-
-  const handleToggleModal = () => {
-    if (isOpen) {
-      dispatch(closeModal());
-    } else {
-      dispatch(openModal());
-    }
-  };
-
+  
   // connection
   const authToken = useSelector((state) => state.auth.authToken);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Get login status
@@ -161,13 +153,15 @@ const deleteCookie = (name) => {
               Sign In
             </button>
             <button
-              onClick={handleToggleModal}
+              onClick={handleOpenModal}
               class="sign-in-button"
               type="button"
             >
-              {isOpen ? "Close" : "Sign-up"}
+              {ModalIsOpen ? "Close" : "Sign-up"}
             </button>
-            <ModalSignUp />
+           {ModalIsOpen && <ModalSignUp />} 
+            
+            
           </form>
         </section>
       </main>
