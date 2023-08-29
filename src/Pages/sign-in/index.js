@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../Data/api";
 
-function Signin(props) {
+function Signin() {
   //remember me
   const dispatch = useDispatch();
   const rememberMe = useSelector((state) => state.auth.rememberMe); // Obtenez l'état de "Remember Me"

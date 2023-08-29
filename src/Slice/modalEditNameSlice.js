@@ -35,6 +35,5 @@ const modalEditNameSlice = createSlice({
   },
 });
 
-export const { hideEditButton, hideModal, setUserDetails, updateUserName } =
-  modalEditNameSlice.actions;
+export const { hideEditButton, hideModal, setUserDetails, updateUserName } = modalEditNameSlice.actions;
 export default modalEditNameSlice.reducer;
