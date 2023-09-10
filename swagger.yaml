@@ -116,6 +116,23 @@ paths:
         '500':
           description: Internal Server Error
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+
   /user/account/{accountId}:
     get:
       tags:
@@ -157,7 +174,15 @@ paths:
           description: Internal Server Error
       security:
         - Bearer: []
-  /user/categories:
+
+
+
+
+
+
+
+
+  /categories:
     get:
       tags:
         - Account Module
@@ -187,6 +212,12 @@ paths:
           description: Internal Server Error
       security:
         - Bearer: []
+
+
+
+
+
+
   /user/transaction/{transactionId}:
     get:
       tags:
@@ -222,6 +253,12 @@ paths:
           description: Internal Server Error
       security:
         - Bearer: []
+
+
+
+
+
+
     put:
       tags:
         - Account Module
@@ -247,7 +284,7 @@ paths:
           in: body
           description: Update transaction's category
           required: true
-          schema:
+          body:
             $ref: '#/definitions/EditableDetails'
       responses:
         '200':
@@ -262,6 +299,15 @@ paths:
           description: Internal Server Error
       security:
         - Bearer: []
+
+
+
+
+
+
+
+
+
 
 securityDefinitions:
   Bearer:
@@ -345,7 +391,7 @@ definitions:
         type: string
         format: string
         example: "success : transaction's details fetched"
-      schema:
+      body:
         $ref: '#/definitions/Details'
     xml:
       name: Details
@@ -360,7 +406,7 @@ definitions:
         type: string
         format: string
         example: "success : transaction's category fetched"
-      schema:
+      body:
         $ref: '#/definitions/Categories'
     xml:
       name: Details

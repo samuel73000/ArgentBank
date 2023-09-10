@@ -13,22 +13,26 @@ const modalEditNameSlice = createSlice({
     },
   },
   reducers: {
+    //etat de la modale editname
     hideEditButton: (state) => {
       state.showEditButton = false;
       state.showModal = true;
       state.showWelcomeMessage = false;
     },
+    //etat de la modale editname
     hideModal: (state) => {
       state.showModal = false;
       state.showWelcomeMessage = true;
       state.showEditButton = true;
     },
+    //stock les info qui vien du call api 
     setUserDetails: (state, action) => {
       const { userName, firstName, lastName } = action.payload;
       state.userData.userName = userName;
       state.userData.firstName = firstName;
       state.userData.lastName = lastName;
     },
+    //stocke le nouveau username 
     updateUserName: (state, action) => {
       state.userData.userName = action.payload;
     },

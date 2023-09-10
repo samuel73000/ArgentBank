@@ -36,10 +36,12 @@ function User() {
 
   useEffect(() => {
     // Appel de la fonction fetchUserProfile au chargement de la page
+    // call api avec le token pour prendre les bonne info 
     fetchUserProfile(token)
       .then((userProfile) => {
         dispatch(
           setUserDetails({
+            // on recupere le user name first name et le last name
             userName: userProfile.userName,
             firstName: userProfile.firstName,
             lastName: userProfile.lastName,

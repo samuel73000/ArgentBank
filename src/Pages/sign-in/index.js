@@ -14,9 +14,9 @@ function Signin() {
   //remember me
   const dispatch = useDispatch();
   const rememberMe = useSelector((state) => state.auth.rememberMe); // Obtenez l'état de "Remember Me"
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginMessage, setLoginMessage] = useState("");
+  const [email, setEmail] = useState("");// Obtenez l'état de "email"
+  const [password, setPassword] = useState("");// Obtenez l'état de "password"
+  const [loginMessage, setLoginMessage] = useState("");// Obtenez l'état de "du message de connexion"
   const token = useSelector((state) => state.auth.authToken);
   const [ModalIsOpen, setModalIsOpen] = useState(false);
 
@@ -42,39 +42,39 @@ function Signin() {
     dispatch(setRememberMe(!rememberMe));
   };
 
-  // modale pour s'inscrire
+  // function pour ouvire la modale pour s'inscrire
   const handleOpenModal = () => {
     setModalIsOpen(!ModalIsOpen);
   };
 
   
   // connection
-  const authToken = useSelector((state) => state.auth.authToken);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // Get login status
+  const authToken = useSelector((state) => state.auth.authToken); // pour stocker le token
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // savoir si il est connecter ou pas 
   const navigate = useNavigate();
 
   //call api
   const handleLogin = async (e) => {
     e.preventDefault();
     if (rememberMe) {
-      setCookie("rememberedEmail", email, 30); // Cookie expirera dans 30 jours
+      setCookie("rememberedEmail", email, 30); // si il click sur remember me Cookie expirera dans 30 jours
       setCookie("rememberedPassword", password, 30);
     } else {
-      deleteCookie("rememberedEmail");
+      deleteCookie("rememberedEmail");// si il click pas sur remember me on supprime les cookie 
       deleteCookie("rememberedPassword");
     }
+    //envoie l'email et le mdp a l'api 
     try {
       const authToken = await loginUser(email, password);
       setEmail(""); // Effacez l'e-mail
       setPassword(""); // Effacez le mot de passe
       dispatch(setAuthToken(authToken));
-      dispatch(setIsLoggedIn(true)); // il est connecté
-      setLoginMessage("Connexion réussie");
-      localStorage.setItem("authToken", authToken);
-      navigate("/user");
-      console.log(authToken);
+      dispatch(setIsLoggedIn(true)); // change l'etat de connection 
+      setLoginMessage("Connexion réussie");// on affiche un message qui confirme la connexion
+      localStorage.setItem("authToken", authToken);// on stocke le token dans le localstorage
+      navigate("/user");// on redirige a la page user
     } catch (error) {
-      setLoginMessage("Échec de la connexion");
+      setLoginMessage("Échec de la connexion");// on affiche que la connexion na pas fonctionner
       console.error("Échec de la connexion");
     }
   };

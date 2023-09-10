@@ -8,9 +8,11 @@ const authSlice = createSlice({
     rememberMe: false,
   },
   reducers: {
+    //stocke le token
     setAuthToken: (state, action) => {
       state.authToken = action.payload;
     },
+    //stocke l'etat de connexion
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
     },
@@ -20,6 +22,7 @@ const authSlice = createSlice({
       state.rememberMe = false;
       // Réinitialisez d'autres propriétés d'état liées à l'authentification si nécessaire
     },  
+    //stocke si il a cocher la case remember me 
     setRememberMe: (state, action) => {
       state.rememberMe = action.payload;
     },

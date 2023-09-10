@@ -1,3 +1,4 @@
+//pour se connecter
 export const loginUser = async (email, password) => {
   try {
     const response = await fetch("http://localhost:3001/api/v1/user/login", {
@@ -21,7 +22,7 @@ export const loginUser = async (email, password) => {
     throw new Error("Erreur lors de la connexion : " + error);
   }
 };
-
+// pour sign-up
 export const signUpUser = async (
   email,
   password,
@@ -53,7 +54,7 @@ export const signUpUser = async (
     throw new Error("Erreur lors de l'inscription : " + error);
   }
 };
-
+// pour metre a jour le username
 export const updateUserNameAPI = async (token, updateUserName) => {
   try {
     const requestBody = {
@@ -78,6 +79,8 @@ export const updateUserNameAPI = async (token, updateUserName) => {
     throw new Error("Erreur lors de la mise à jour : " + error);
   }
 };
+
+// pour recuperer le profil 
 export const fetchUserProfile = async (token) => {
   try {
     const response = await fetch("http://localhost:3001/api/v1/user/profile", {

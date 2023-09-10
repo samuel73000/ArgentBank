@@ -18,7 +18,7 @@ const [localUserName, setLocalUserName] = useState(userData.userName);
   //call api
   const handleSaveClick = async () => {
     try {
-      const response = await updateUserNameAPI(token, localUserName);
+       await updateUserNameAPI(token, localUserName);
       // Après la mise à jour réussie de l'API, mettez à jour le Redux Store
       dispatch(updateUserName(localUserName));
       dispatch(hideModal());
