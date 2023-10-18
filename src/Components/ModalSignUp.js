@@ -13,7 +13,7 @@ const ModalSignUp = () => {
   //call api
   const handleSignUp = async () => {
     try {
-      const response = await signUpUser(
+       await signUpUser(
         email,
         password,
         firstName,

@@ -1,5 +1,5 @@
 import "../Styles/index.css";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAuthData, setIsLoggedIn } from "../Slice/authSlice";

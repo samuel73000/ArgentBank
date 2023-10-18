@@ -30,9 +30,9 @@ function User() {
   const userData = useSelector((state) => state.EditName.userData);
   const token = useSelector((state) => state.auth.authToken); // on prend token
   // Fermer la modal au chargement de la page
-  useEffect(() => {
-    dispatch(hideModal());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(hideModal());
+  // }, []);
 
   useEffect(() => {
     // Appel de la fonction fetchUserProfile au chargement de la page

@@ -49,8 +49,8 @@ function Signin() {
 
   
   // connection
-  const authToken = useSelector((state) => state.auth.authToken); // pour stocker le token
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn); // savoir si il est connecter ou pas 
+   useSelector((state) => state.auth.authToken); // pour stocker le token
+  useSelector((state) => state.auth.isLoggedIn); // savoir si il est connecter ou pas 
   const navigate = useNavigate();
 
   //call api
