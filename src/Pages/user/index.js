@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   hideEditButton,
   setUserDetails,
-  hideModal,
+  // hideModal,
 } from "../../Slice/modalEditNameSlice";
 import React, { useEffect } from "react";
 import { fetchUserProfile } from "../../Data/api";
